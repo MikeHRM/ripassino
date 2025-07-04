@@ -1,0 +1,87 @@
+{
+	"info": {
+		"_postman_id": "ea767a52-5b48-4e13-923f-da37f98a02fa",
+		"name": "FE Training - Server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26732650"
+	},
+	"item": [
+		{
+			"name": "Gel all partners",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/generate-partner",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"generate-partner"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update partner by Id",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 123\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/generate-partner/update-partner",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"generate-partner",
+						"update-partner"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add partner by name",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"mario\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/generate-partner/add-partner",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"generate-partner",
+						"add-partner"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
