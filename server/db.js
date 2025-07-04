@@ -5,7 +5,7 @@ const MongoClient = mongodb.MongoClient;
 
 // yeah, yeah, this is terrible but this is just for training purposes so who cares?
 const MongoDbUrl =
-  "mongodb+srv://michaelfilippo:VSN2ghv2HpF0icjI@abb-cluster.qhy94ly.mongodb.net/training?retryWrites=true&w=majority";
+  "mongodb+srv://michaelfilippo:GYLxX0xDrw4ON7DM@ripassino.oupediz.mongodb.net/?retryWrites=true&w=majority&appName=sample_mflix";
 
 let _db;
 

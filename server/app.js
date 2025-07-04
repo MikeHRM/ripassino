@@ -15,6 +15,9 @@ app.use(morgan("dev"));
 const generatePartner = require("./routes/generate-partner");
 app.use("/generate-partner", generatePartner);
 
+const ripassino = require("./routes/ripassino");
+app.use("/ripassino", ripassino);
+
 app.use(function (req, res, next) {
   res.status(404);
   res.type("txt").send("404 - Not found");

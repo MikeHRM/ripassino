@@ -2,19 +2,20 @@
 //   min: number;
 //   max: number;
 
-import {Box, Button} from '@mui/material';
-import axios from 'axios';
-import {useEffect, useReducer} from 'react';
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-import RandomNumberGenerator from './components/RandomNumberGenerator/RandomNumberGenerator';
-import AddNewNameForm from './components/AddNewNameForm/AddNewNameForm';
-import Partners from './components/Partners/Partners';
-import PartnersQuery from './components/PartnersQuery/PartnersQuery';
-import DataGridTest from './components/DataGridTest/DataGridTest';
-import Counter from './components/Counter/Counter';
-import CounterValue from './components/Counter/CounterValue';
-import {calculateCognitiveComplexity} from './calculateCognitiveComplexity';
-import PageCoverage from './pages/PageCoverage';
+import { Box, Button } from "@mui/material";
+import axios from "axios";
+import { useEffect, useReducer } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import RandomNumberGenerator from "./components/RandomNumberGenerator/RandomNumberGenerator";
+import AddNewNameForm from "./components/AddNewNameForm/AddNewNameForm";
+import Partners from "./components/Partners/Partners";
+import PartnersQuery from "./components/PartnersQuery/PartnersQuery";
+import DataGridTest from "./components/DataGridTest/DataGridTest";
+import Counter from "./components/Counter/Counter";
+import CounterValue from "./components/Counter/CounterValue";
+import { calculateCognitiveComplexity } from "./calculateCognitiveComplexity";
+import PageCoverage from "./pages/PageCoverage";
+import Ripassino from "./pages/Ripassino";
 
 // }
 
@@ -37,7 +38,7 @@ interface IPerson {
 let render = 0;
 
 function App() {
-  console.log('axios', axios);
+  // console.log("axios", axios);
   // const [partners, setPartners] = useState<IPerson[]>([])
   // const [errorMessage, setErrorMessage] = useState<string | null>(null)
   // const [loading, setLoading] = useState<boolean>(false)
@@ -77,13 +78,13 @@ function App() {
   // }
 
   render++;
-  console.log('App render', render);
+  // console.log("App render", render);
   // console.log('partners', partners)
 
-  console.log(
-    'CounterValue cognitive complexity',
-    calculateCognitiveComplexity(<Counter />)
-  );
+  // console.log(
+  //   "CounterValue cognitive complexity",
+  //   calculateCognitiveComplexity(<Counter />)
+  // );
 
   // const partnersToRender = partners.map(partner => {
   //   return { ...partner, color: "red" }
@@ -96,9 +97,12 @@ function App() {
           <Route path="/coverage">
             <PageCoverage />
           </Route>
-          <Route path="/">
+          <Route path="/counter">
             <Counter />
             <CounterValue />
+          </Route>
+          <Route path="/">
+            <Ripassino />
           </Route>
         </Switch>
       </Router>
