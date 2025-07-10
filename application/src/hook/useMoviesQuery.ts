@@ -1,16 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosClient from "../api/axiosClient";
 import type { AxiosResponse } from "axios";
-
-type Movie = {
-  plot: string;
-  title: string;
-  // ...
-};
+import type { Movie } from "../types/Movie";
 
 async function fetchMovies() {
   const response: AxiosResponse<Array<Movie>> = await axiosClient.get(
-    "/ripassino"
+    "/movies"
   ); // Movie[] or Array<Movie>
 
   return response.data;
