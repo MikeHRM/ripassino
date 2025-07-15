@@ -16,6 +16,7 @@ import CounterValue from "./components/Counter/CounterValue";
 import { calculateCognitiveComplexity } from "./calculateCognitiveComplexity";
 import PageCoverage from "./pages/PageCoverage";
 import Ripassino from "./pages/Ripassino";
+import RipassinoSuspense from "./pages/RipassinoSuspense";
 
 // }
 
@@ -103,6 +104,7 @@ function App() {
           </Route>
           <Route path="/">
             <Ripassino />
+            {/* <RipassinoSuspense /> */}
           </Route>
         </Switch>
       </Router>
