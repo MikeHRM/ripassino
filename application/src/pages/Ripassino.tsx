@@ -24,11 +24,11 @@ export default function Ripassino() {
     isRefetching: moviesIsRefetching,
   } = useMoviesQuery();
 
-  console.group("pippo");
-  console.log("moviesIsLoading", moviesIsLoading);
-  console.log("moviesIsPending", moviesIsPending);
-  console.log("moviesIsRefetching", moviesIsRefetching);
-  console.groupEnd();
+  // console.group("pippo");
+  // console.log("moviesIsLoading", moviesIsLoading);
+  // console.log("moviesIsPending", moviesIsPending);
+  // console.log("moviesIsRefetching", moviesIsRefetching);
+  // console.groupEnd();
 
   useEffect(() => {
     if (moviesIsError) {
@@ -73,7 +73,7 @@ export default function Ripassino() {
             <ListItem key={movie._id}>
               <Stack direction="row">
                 <Typography>{movie.title}</Typography>
-                <EditMovieDialogButton />
+                <EditMovieDialogButton title={movie.title} />
               </Stack>
             </ListItem>
           );

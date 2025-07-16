@@ -1,8 +1,21 @@
-import { Button, Dialog } from "@mui/material";
-import { useState } from "react";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
+import { useRef, useState } from "react";
+import EditMovieBasicForm from "./EditMovieBasicForm";
+import type { Movie } from "../../types/Movie";
 
-export default function EditMovieDialogButton() {
+type Props = {
+  title: Movie["title"];
+};
+
+export default function EditMovieDialogButton({ title }: Props) {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   // temp, working on that
   //   const [dialogOpen, startTransition] = useTransition()
@@ -15,8 +28,32 @@ export default function EditMovieDialogButton() {
 
   return (
     <>
-      <Dialog open={dialogOpen}>pippo</Dialog>
-      <Button onClick={() => setDialogOpen(true)}>Edit</Button>
+      {/* <ClickAwayListener
+        onClickAway={(event) => {
+          console.log("event", event);
+          if (event.target !== buttonRef.current) setDialogOpen(false);
+        }}
+      > */}
+      <Dialog open={dialogOpen} fullWidth maxWidth="sm">
+        <DialogTitle>Pippo</DialogTitle>
+        <DialogContent>
+          <EditMovieBasicForm title={title} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      {/* </ClickAwayListener> */}
+
+      <Button
+        ref={buttonRef}
+        onClick={() => {
+          console.log("ref", buttonRef);
+          setDialogOpen(true);
+        }}
+      >
+        Edit
+      </Button>
     </>
   );
 }
