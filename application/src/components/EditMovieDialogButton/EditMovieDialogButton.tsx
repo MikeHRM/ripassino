@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -36,12 +37,10 @@ export default function EditMovieDialogButton({ title }: Props) {
       > */}
       <Dialog open={dialogOpen} fullWidth maxWidth="sm">
         <DialogTitle>Pippo</DialogTitle>
-        <DialogContent>
-          <EditMovieBasicForm title={title} />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDialogOpen(false)}>Close</Button>
-        </DialogActions>
+        <EditMovieBasicForm
+          title={title}
+          onClose={() => setDialogOpen(false)}
+        />
       </Dialog>
       {/* </ClickAwayListener> */}
 
