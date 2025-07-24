@@ -1,14 +1,19 @@
 import { CssBaseline } from "@mui/material";
-import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
-import { ReactNode } from "react";
+import {
+  ThemeProvider as MuiThemeProvider,
+  useColorScheme,
+} from "@mui/material/styles";
+import type { ReactNode } from "react";
 import { lightTheme } from "./lightTheme";
+import { darkTheme } from "./darkTheme";
 
 type Props = {
   children: ReactNode;
 };
 export default function ThemeProvider({ children }: Props) {
+  const { mode } = useColorScheme();
   return (
-    <MuiThemeProvider theme={lightTheme}>
+    <MuiThemeProvider theme={mode === "light" ? lightTheme : darkTheme}>
       <CssBaseline />
       {children}
     </MuiThemeProvider>

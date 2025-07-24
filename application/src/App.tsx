@@ -17,6 +17,7 @@ import { calculateCognitiveComplexity } from "./calculateCognitiveComplexity";
 import PageCoverage from "./pages/PageCoverage";
 import Ripassino from "./pages/Ripassino";
 import RipassinoSuspense from "./pages/RipassinoSuspense";
+import ThemeToggle from "./theme/ThemeToggle";
 
 // }
 
@@ -108,6 +109,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
+      <ThemeToggle />
     </>
     // <DataGridTest/>
     // <>
