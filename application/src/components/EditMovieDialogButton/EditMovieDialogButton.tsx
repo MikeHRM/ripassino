@@ -11,6 +11,7 @@ import EditMovieBasicForm from "./EditMovieBasicForm";
 import type { Movie } from "../../types/Movie";
 
 type Props = {
+  /** the title of the link to edit */
   title: Movie["title"];
 };
 
