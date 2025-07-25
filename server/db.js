@@ -1,40 +1,14 @@
-const mongodb = require("mongodb");
+// db.js
+const { createClient } = require("@supabase/supabase-js");
 require("dotenv").config();
 
-const MongoClient = mongodb.MongoClient;
+// yeah, yeah, this is still terrible but still just for training purposes so who cares?
+const SUPABASE_URL = "https://ghzxehgxnsdnmeazbuzd.supabase.co";
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdoenhlaGd4bnNkbm1lYXpidXpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM0NTM5NzgsImV4cCI6MjA2OTAyOTk3OH0.D9NTWkrHihJPYFEYK2odysV0iAvIwZrVFqsOHrtWwSY";
 
-// yeah, yeah, this is terrible but this is just for training purposes so who cares?
-const MongoDbUrl =
-  // "mongodb://michaelfilippo:GYLxX0xDrw4ON7DM@localhost:27017/?retryWrites=true&w=majority&appName=sample_mflix";
-  "mongodb+srv://michaelfilippo:GYLxX0xDrw4ON7DM@ripassino.oupediz.mongodb.net/?retryWrites=true&w=majority&appName=sample_mflix";
-// "mongodb://michaelfilippo:GYLxX0xDrw4ON7DM@localhost/?retryWrites=true&w=majority&appName=sample_mflix";
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-let _db;
+console.log("✅ Supabase client initialized");
 
-const initDb = (callback) => {
-  if (_db) {
-    console.log("Database already initialized");
-    return callback(null, _db);
-  }
-  MongoClient.connect(MongoDbUrl)
-    .then((client) => {
-      _db = client;
-      callback(null, _db);
-    })
-    .catch((err) => {
-      callback(err);
-    });
-};
-
-const getDb = () => {
-  if (!_db) {
-    throw Error("Database not initialized");
-  }
-  return _db;
-};
-
-module.exports = {
-  initDb,
-  getDb,
-  MongoDbUrl,
-};
+module.exports = supabase;

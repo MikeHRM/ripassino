@@ -3,7 +3,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const PORT = 8080;
 const bodyParser = require("body-parser");
-const db = require("./db");
+// const db = require("./db");
 const app = express();
 
 require("dotenv").config();
@@ -23,14 +23,17 @@ app.use(function (req, res, next) {
   res.type("txt").send("404 - Not found");
 });
 
-db.initDb((err, db) => {
-  if (err) {
-    console.log("error DB", err);
-  } else {
-    app.listen(PORT, () => {
-      console.log(`Listening on port ${8080}`);
-    });
-  }
+// db.initDb((err, db) => {
+//   if (err) {
+//     console.log("error DB", err);
+//   } else {
+//     app.listen(PORT, () => {
+//       console.log(`Listening on port ${8080}`);
+//     });
+//   }
+// });
+app.listen(PORT, () => {
+  console.log(`Listening on port ${8080}`);
 });
 
 app.use((req, res, next) => {

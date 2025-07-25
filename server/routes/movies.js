@@ -1,29 +1,18 @@
 const Router = require("express").Router;
 const db = require("../db");
-const { ObjectId } = require("mongodb");
+// const { ObjectId } = require("mongodb");
 
 const router = Router();
 
-router.get("/", (req, res) => {
-  const entries = [];
-  db.getDb()
-    .db("sample_mflix")
-    .collection("movies")
-    .find()
-    .limit(50)
-    .forEach((entry) => {
-      //   console.log("partner", partner);
-      entries.push(entry);
-    })
-    .then((result) => {
-      console.log("Success", result);
-      res.status(200).json(entries);
-    })
-    .catch((error) => {
-      res.status(200).json({
-        message: "An error has occured",
-      });
-    });
+router.get("/", async (req, res) => {
+  try {
+    const { data, error } = await db.from("movies").select("*").limit(50);
+    if (error) throw error;
+    res.status(200).json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "An error has occurred" });
+  }
 });
 
 router.patch("/:id", async (req, res) => {
@@ -35,13 +24,17 @@ router.patch("/:id", async (req, res) => {
   }
 
   try {
-    const result = await db
-      .getDb()
-      .db("sample_mflix")
-      .collection("movies")
-      .updateOne({ _id: new ObjectId(id) }, { $set: { title } });
+    const { data, error } = await db
+      .from("movies")
+      .update({ title })
+      .eq("_id", id)
+      .select();
 
-    if (result.matchedCount === 0) {
+    if (error) {
+      throw error;
+    }
+
+    if (data.length === 0) {
       return res.status(404).json({ message: "Movie not found" });
     }
 
