@@ -13,9 +13,10 @@ import type { Movie } from "../../types/Movie";
 type Props = {
   /** the title of the link to edit */
   title: Movie["title"];
+  _id: Movie["_id"];
 };
 
-export default function EditMovieDialogButton({ title }: Props) {
+export default function EditMovieDialogButton({ title, _id }: Props) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -40,6 +41,7 @@ export default function EditMovieDialogButton({ title }: Props) {
         <DialogTitle>Pippo</DialogTitle>
         <EditMovieBasicForm
           title={title}
+          _id={_id}
           onClose={() => setDialogOpen(false)}
         />
       </Dialog>

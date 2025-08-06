@@ -9,15 +9,46 @@ import {
 } from "@mui/material";
 import type { Movie } from "../../types/Movie";
 import { useEffect, useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axiosClient from "../../api/axiosClient";
+import type { AxiosResponse } from "axios";
+
+export async function updateMovieTitle(
+  title: Movie["title"],
+  _id: Movie["_id"]
+) {
+  console.log("updateMovieTitle", title, _id);
+
+  const response: AxiosResponse<{ message: string }> = await axiosClient.patch(
+    `/movies/${_id}`,
+    {
+      title,
+    }
+  ); // Movie[] or Array<Movie>
+
+  return response.data;
+}
 
 type Props = {
   title: Movie["title"];
+  _id: Movie["_id"];
   onClose: () => void;
 };
 
-export default function EditMovieBasicForm({ title, onClose }: Props) {
+export default function EditMovieBasicForm({ title, _id, onClose }: Props) {
   // onSubmit={}
+  const queryClient = useQueryClient();
   const [value, setValue] = useState("");
+
+  const { mutate } = useMutation({
+    mutationFn: (title: Movie["title"]) => updateMovieTitle(title, _id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["movies"] });
+
+      // close the modal
+      onClose();
+    },
+  });
 
   // sync the title internal value with the value from the props
   useEffect(() => {
@@ -35,6 +66,9 @@ export default function EditMovieBasicForm({ title, onClose }: Props) {
         console.log("formData", formData);
         console.log("movie-title", formData.get("movie-title"));
         // call BE
+        const newMoviewTitle = formData.get("movie-title");
+        // @ts-expect-error it should be fine
+        if (newMoviewTitle) mutate(newMoviewTitle);
       }}
     >
       <DialogContent>

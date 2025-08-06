@@ -73,7 +73,7 @@ export default function Ripassino() {
             <ListItem key={movie._id}>
               <Stack direction="row">
                 <Typography>{movie.title}</Typography>
-                <EditMovieDialogButton title={movie.title} />
+                <EditMovieDialogButton title={movie.title} _id={movie._id} />
               </Stack>
             </ListItem>
           );

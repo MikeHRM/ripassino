@@ -11,5 +11,7 @@ const meta = {
 export default meta;
 
 export const DefaultBehaviour = () => {
-  return <EditMovieDialogButton title="my beautiful title" />;
+  return (
+    <EditMovieDialogButton title="my beautiful title" _id="my beautiful id" />
+  );
 };
