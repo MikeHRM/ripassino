@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Button,
   DialogActions,
@@ -12,22 +13,7 @@ import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosClient from "../../api/axiosClient";
 import type { AxiosResponse } from "axios";
-
-export async function updateMovieTitle(
-  title: Movie["title"],
-  _id: Movie["_id"]
-) {
-  console.log("updateMovieTitle", title, _id);
-
-  const response: AxiosResponse<{ message: string }> = await axiosClient.patch(
-    `/movies/${_id}`,
-    {
-      title,
-    }
-  ); // Movie[] or Array<Movie>
-
-  return response.data;
-}
+import { useUpdateMovieTitleMutation } from "../../hook/useUpdateMovieTitleMutation";
 
 type Props = {
   title: Movie["title"];
@@ -37,17 +23,11 @@ type Props = {
 
 export default function EditMovieBasicForm({ title, _id, onClose }: Props) {
   // onSubmit={}
-  const queryClient = useQueryClient();
   const [value, setValue] = useState("");
 
-  const { mutate } = useMutation({
-    mutationFn: (title: Movie["title"]) => updateMovieTitle(title, _id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["movies"] });
-
-      // close the modal
-      onClose();
-    },
+  // mutateAsync
+  const { mutate, isError } = useUpdateMovieTitleMutation({
+    onSuccess: () => console.log("onSuccess global"),
   });
 
   // sync the title internal value with the value from the props
@@ -58,7 +38,7 @@ export default function EditMovieBasicForm({ title, _id, onClose }: Props) {
   return (
     <Box
       component="form"
-      onSubmit={(event) => {
+      onSubmit={async (event) => {
         event.preventDefault();
         console.log("onSubmit", value);
 
@@ -67,11 +47,33 @@ export default function EditMovieBasicForm({ title, _id, onClose }: Props) {
         console.log("movie-title", formData.get("movie-title"));
         // call BE
         const newMoviewTitle = formData.get("movie-title");
-        // @ts-expect-error it should be fine
-        if (newMoviewTitle) mutate(newMoviewTitle);
+
+        if (typeof newMoviewTitle === "string") {
+          // console.log("before await");
+          // const response = await mutateAsync({
+          //   title: newMoviewTitle,
+          //   _id,
+          // });
+          // console.log("after await", response);
+          // onClose();
+
+          mutate(
+            {
+              title: newMoviewTitle,
+              _id,
+            },
+            {
+              onSuccess: () => {
+                console.log("onSuccess submit");
+                onClose();
+              },
+            }
+          );
+        }
       }}
     >
       <DialogContent>
+        {isError ? <Alert severity="error">An error has occurred</Alert> : null}
         <OutlinedInput
           id="movie-title"
           name="movie-title"
