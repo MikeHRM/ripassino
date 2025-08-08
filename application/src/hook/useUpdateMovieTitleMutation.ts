@@ -8,13 +8,21 @@ type UpdateMovieTitleParams = { title: Movie["title"]; _id: Movie["_id"] };
 export async function updateMovieTitle({ title, _id }: UpdateMovieTitleParams) {
   console.log("updateMovieTitle", title, _id);
 
-  // @todo vs fetch
   const response: AxiosResponse<{ message: string }> = await axiosClient.patch(
     `/movies/${_id}`,
     {
       title,
     }
   );
+
+  // keep this for reference for the future
+  // const resp = await fetch(`http://localhost:8100/movies/${_id}`, {
+  //   method: "PATCH",
+  //   body: JSON.stringify({
+  //     title,
+  //   }),
+  // });
+  // const response = await resp.json();
 
   return response.data;
 }
