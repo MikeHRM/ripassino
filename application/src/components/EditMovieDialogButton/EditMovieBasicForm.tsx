@@ -14,6 +14,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosClient from "../../api/axiosClient";
 import type { AxiosResponse } from "axios";
 import { useUpdateMovieTitleMutation } from "../../hook/useUpdateMovieTitleMutation";
+import { SubmitHandler, useForm, Controller } from "react-hook-form";
 
 type Props = {
   title: Movie["title"];
@@ -96,10 +97,86 @@ type Props = {
 // }
 
 // v2 with ref
+// let render = 0;
+// export default function EditMovieBasicForm({ title, _id, onClose }: Props) {
+//   // onSubmit={}
+//   const inputRef = useRef<HTMLInputElement>(null);
+
+//   console.log("render", render);
+//   render++;
+
+//   // mutateAsync
+//   const { mutate, isError } = useUpdateMovieTitleMutation({
+//     onSuccess: () => console.log("onSuccess global"),
+//   });
+
+//   // sync the title internal value with the value from the props
+//   // useEffect(() => {
+//   //   setValue(title);
+//   // }, [title]);
+
+//   return (
+//     <Box
+//       component="form"
+//       onSubmit={async (event) => {
+//         event.preventDefault();
+
+//         const newMoviewTitle = inputRef.current?.value;
+//         console.log("newMoviewTitle", newMoviewTitle);
+
+//         if (newMoviewTitle) {
+//           mutate(
+//             {
+//               title: newMoviewTitle,
+//               _id,
+//             },
+//             {
+//               onSuccess: () => {
+//                 console.log("onSuccess submit");
+//                 onClose();
+//               },
+//             }
+//           );
+//         }
+//       }}
+//     >
+//       <DialogContent>
+//         {isError ? <Alert severity="error">An error has occurred</Alert> : null}
+//         <OutlinedInput
+//           inputRef={inputRef}
+//           id="movie-title"
+//           name="movie-title"
+//           placeholder="movie title"
+//           inputProps={{
+//             "aria-label": "Movie Title",
+//           }}
+//           defaultValue={title}
+//           // value={value}
+//           // onChange={(evt) => setValue(evt.target.value)}
+//         />
+//       </DialogContent>
+//       <DialogActions>
+//         <Button type="submit">Submit</Button>
+//         <Button onClick={onClose}>Close</Button>
+//       </DialogActions>
+//       {/* <FormControl> */}
+//       {/* <InputLabel for="movie-title">Movie Title</InputLabel> */}
+
+//       {/* <Button type="submit">Send</Button> */}
+//       {/* </FormControl> */}
+//     </Box>
+//   );
+// }
+
+type Form = {
+  title: string;
+};
+
+// v3 with RHF
 let render = 0;
 export default function EditMovieBasicForm({ title, _id, onClose }: Props) {
   // onSubmit={}
-  const inputRef = useRef<HTMLInputElement>(null);
+  const { handleSubmit, control } = useForm<Form>();
 
   console.log("render", render);
   render++;
@@ -114,44 +191,55 @@ export default function EditMovieBasicForm({ title, _id, onClose }: Props) {
   //   setValue(title);
   // }, [title]);
 
+  const onSubmit: SubmitHandler<Form> = (data) => {
+    console.log("onSubmit", data);
+  };
+
   return (
     <Box
       component="form"
-      onSubmit={async (event) => {
-        event.preventDefault();
+      onSubmit={handleSubmit(onSubmit)}
+      // onSubmit={async (event) => {
+      //   event.preventDefault();
 
-        const newMoviewTitle = inputRef.current?.value;
-        console.log("newMoviewTitle", newMoviewTitle);
+      //   const newMoviewTitle = inputRef.current?.value;
+      //   console.log("newMoviewTitle", newMoviewTitle);
 
-        if (newMoviewTitle) {
-          mutate(
-            {
-              title: newMoviewTitle,
-              _id,
-            },
-            {
-              onSuccess: () => {
-                console.log("onSuccess submit");
-                onClose();
-              },
-            }
-          );
-        }
-      }}
+      //   if (newMoviewTitle) {
+      //     mutate(
+      //       {
+      //         title: newMoviewTitle,
+      //         _id,
+      //       },
+      //       {
+      //         onSuccess: () => {
+      //           console.log("onSuccess submit");
+      //           onClose();
+      //         },
+      //       }
+      //     );
+      //   }
+      // }}
     >
       <DialogContent>
         {isError ? <Alert severity="error">An error has occurred</Alert> : null}
-        <OutlinedInput
-          inputRef={inputRef}
-          id="movie-title"
-          name="movie-title"
-          placeholder="movie title"
-          inputProps={{
-            "aria-label": "Movie Title",
-          }}
-          defaultValue={title}
-          // value={value}
-          // onChange={(evt) => setValue(evt.target.value)}
+        <Controller
+          name="title"
+          control={control}
+          render={({ field }) => (
+            <OutlinedInput
+              {...field}
+              id="movie-title"
+              name="movie-title"
+              placeholder="movie title"
+              inputProps={{
+                "aria-label": "Movie Title",
+              }}
+              //defaultValue={title}
+              // value={value}
+              // onChange={(evt) => setValue(evt.target.value)}
+            />
+          )}
         />
       </DialogContent>
       <DialogActions>
